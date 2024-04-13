@@ -1,5 +1,404 @@
-<html>
-  <head>
-    <title>Hello world</title>
-  </head>
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>Underwater Networks + UnetStack</title>
+
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/theme/sky.css">
+
+	<!-- Theme used for syntax highlighted code -->
+	<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	<style>
+		.right {
+			text-align: right;
+		}
+		.pt-2 {
+			padding-top: 20%;
+		}
+		.reveal li:not(:last-child) {
+			margin-bottom: max(20px, 1%);
+		}
+		.reveal li {
+			font-size: 0.8em;
+		}
+	</style>
+</head>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-background-image="imgs/bg1.webp" data-background-size="cover" data-background-opacity="0.4">
+				<h3 class="r-fit-text" >Underwater Networks</h3>
+				<div class="right pt-2" style="font-size: 0.7em;">Chinmay Pendharkar @ Oceans Summer School, 2024</div>
+			</section>
+
+			<section>
+				<h3>Who are you?</h3>
+				<div style="display: flex; align-items: center; gap: 5vw; justify-content: center">
+					<img src="imgs/chinmay.jpg" style="max-width: 20vw;" alt="Chinmay">
+					<ul>
+						<li>Chinmay Pendharkar</li>
+						<li class="fragment">Singapore 🇸🇬</li>
+						<li class="fragment">Audio/Acoustics + Software</li>
+						<li class="fragment">CTO @ Subnero</li>
+					</ul>
+				</div>
+			</section>
+
+			<section>
+				<h3>Subnero</h3>
+				<div style="display: flex; align-items: center; gap: 2vw; justify-content: center;">
+					<img src="imgs/subnero.jpg" style="max-width: 20vw;" alt="Subnero">
+					<ul>
+						<li>Singapore 🇸🇬</li>
+						<li class="fragment">Underwater Wireless</li>
+						<li class="fragment">Acoustic Smart Modems</li>
+						<li class="fragment">UnetStack</li>
+						<li class="fragment">Booth A07 @ Oceans</li>
+					</ul>
+				</div>
+			</section>
+
+
+			<section>
+				<h1 class="r-fit-text">🙋</h1>
+				<aside class="notes">
+					- From Singapore vs Overseas ??
+					- Students vs Professionals ??
+					- Marine Technology vs X ??
+					- Marine Robotics vs X ??
+				</aside>
+			</section>
+
+			<section data-markdown data-background-image="imgs/ocean.jpg" data-background-opacity="0.2">
+				<textarea data-template>
+					### Oceans
+					- Climate Control: Regulate global weather 🌤️
+					- Biodiversity: Host critical marine life 🐟
+					- Economy: Fisheries, tourism, and trade 🚢
+					- Carbon Absorption: Mitigate climate change 🌍
+					<div></div>
+					<span style="font-size: 0.25em; margin-top: 2em;">Photo by <a href="https://unsplash.com/@jbcreate_?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Joseph Barrientos</a> on <a href="https://unsplash.com/photos/body-of-water-during-golden-hour-oQl0eVYd_n8?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a></span>
+				</textarea>
+			</section>
+
+			<section >
+				<div >
+					<h3>Oceans</h3>
+					<ul>
+						<li>Vast : 70% of Earth's surface 🌍</li>
+						<li>Deep : 11km deep 🌊</li>
+						<li>Dark : 1000x less light than surface 🌑</li>
+					</ul>
+					<p class="fragment"><strong>We need technology to explore and understand the oceans</strong></p>
+				</div>
+			</section>
+
+			<section>
+				<h3>Technology..</h3>
+				<div style="display: flex; align-items: center; gap: 5vw; justify-content: center">
+					<div>
+						<img src="imgs/robots.jpg" style="max-width: 20vw;" alt="robots">
+						<p>Robots 🤖</p>
+					</div>
+					<div>
+						<img src="imgs/sensor.jpg" style="max-width: 20vw;" alt="sensor">
+						<p>Sensors 🌡️</p>
+					</div>
+				</div>
+			</section>
+
+
+			<section>
+				<h3>Terrestrial comms..</h3>
+				<em>.. is kinda "solved"</em>
+				<div style="display: flex; align-items: center; gap: 5vw; justify-content: center">
+					<div>
+						<img src="imgs/starlink.jpg" style="max-width: 20vw;" alt="starlink">
+						<p>Starlink 🛰️</p>
+						<span style="font-size: 0.25em; margin-top: 2em;"><a href="https://www.flickr.com/photos/spacex/">Official SpaceX Photos</a></span>
+					</div>
+					<div>
+						<img src="imgs/argofloats.png" style="max-width: 20vw;" alt="argofloats">
+						<p><a href="https://argo.ucsd.edu/how-do-floats-work/">Argo  🌡️</a></p>
+						<span style="font-size: 0.25em; margin-top: 2em;"><a href=" https://en.wikipedia.org/wiki/Argo_(oceanography)">Argo (oceanography) - Wikipedia</a></span>
+					</div>
+				</div>
+			</section>
+
+			<section>
+				<h4>But underwater comms is still a significant challenge!</h4>
+				<p class="fragment"><strong>Why?</strong></p>
+			</section>
+
+			<section>
+				<h3>RF</h3>
+				<div style="display: flex; align-items: center; flex-direction: column;">
+					<img src="imgs/em-attenuation.png" style="max-width:50vw;" alt="Chinmay">
+					<span style="font-size: 0.25em;">Zahedi, Yasser & Ghafghazi, Hamidreza & Syed Ariffin, Sharifah Hafizah & Kassim, Norazan. (2011). Feasibility of Electromagnetic Communication in Underwater Wireless Sensor Networks. 614-623. 10.1007/978-3-642-25462-8_55.</span>
+				</div>
+			</section>
+
+			<section>
+				<h3>Optical Comms?</h3>
+				<iframe width="952" height="382" src="https://www.youtube.com/embed/gYiwgye1Hvs?start=412&amp;end=525;" title="Don&#39;t scuba dive in Singapore" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+			</section>
+
+			<section>
+				<h3>Optical Comms</h3>
+				<div style="display: flex; align-items: center; gap: 2vw; justify-content: center;">
+					<img src="imgs/optical.png" style="max-width: 20vw;" alt="Hydromea">
+					<ul>
+						<li>High datarate + Short distance</li>
+						<li class="fragment">Data mueling 🫏</li>
+						<li class="fragment">Docking ⚓️</li>
+						<li class="fragment">Hybrid communications 📡</li>
+					</ul>
+				</div>
+			</section>
+
+			<section>
+				<h3>Acoustic Comms</h3>
+				<div style="display: flex; align-items: center; gap: 2vw; justify-content: center">
+					<img src="imgs/subnero.jpg" style="max-width: 20vw;" alt="Subnero">
+					<ul>
+						<li>Limited bandwidth</li>
+						<li class="fragment">Range vs datarate 📉 </li>
+						<li class="fragment">Noisy environment 🚢 </li>
+					</ul>
+				</div>
+			</section>
+
+			<section>
+				<h3>Acoustic Comms challenges</h3>
+				<img src="imgs/port.jpg" alt="">
+				<p>Noisy ports</p>
+			</section>
+
+			<section>
+					<h3>Acoustic Comms challenges</h3>
+					<img style="max-height: 40vh;" src="imgs/snapping-shrimps.jpg" alt="">
+					<p>Noisy oceans!</p>
+					<span style="font-size: 0.25em; margin-top: 2em;"><a href="http://wildsingapore.com/">http://wildsingapore.com/</a></span>
+			</section>
+
+			<section>
+				<h3>Acoustic Comms challenges</h3>
+				<img src="imgs/snaps.png" alt="">
+				<p>Noisy oceans!</p>
+		</section>
+
+			<section>
+				<h3>But comms alone is not enough...</h3>
+				<em>We need networks🌐</em>
+				<div style="display: flex; align-items: center; gap: 2vw; justify-content: center">
+					<img src="imgs/network-bathy.png" style="max-width: 20vw;" alt="Network">
+					<img src="imgs/network-map.png" style="max-width: 20vw;" alt="Network">
+			</section>
+
+			<section data-markdown>
+				<textarea data-template>
+					### Networks are..
+					- resilient
+					- scalable
+					- support positioning and navigation
+				</textarea>
+			</section>
+
+			<section data-markdown>
+				<textarea data-template>
+					### But underwater..
+					- long propagation delays
+					- limited bandwidth
+					- ever changing environment
+				</textarea>
+			</section>
+
+			<section data-markdown>
+				<textarea data-template>
+					### Whats works with underwater networks
+					- Malleable architecture
+					- Intelligent protocols
+					- Edge computing
+				</textarea>
+			</section>
+
+			<section data-markdown>
+				<textarea data-template>
+					### Software Defined Underwater Networks
+					- Network protocols implemented in software
+					- Flexibility
+					- Adaptability
+					- Compute at the edge
+				</textarea>
+			</section>
+
+			<section>
+				<h3>UnetStack</h3>
+				<p><em>A collection of software technologies to extend communication networks underwater</em></p>
+				<ul>
+					<li>Networking Stack</li>
+					<li>Simulator</li>
+					<li>Helper Libraries (Gateways), APIs</li>
+				</ul>
+			</section>
+
+			<section >
+				<h3>History</h3>
+				<div style="display: flex; align-items: center; gap: 2vw; justify-content: center">
+					<img src="imgs/LWTA2.jpg" style="max-height: 40vh;" alt="UnetStack">
+					<ul>
+						<li>Developed in ~2009</li>
+						<li>Developed by Acoustics Research Lab @ National University of Singapore (NUS)</li>
+						<li>Comms for their research AUV (Starfish)</li>
+						<li>Co-maintained by Subnero</li>
+					</ul>
+				</div>
+			</section>
+
+			<section>
+				<h3>Design Goals</h3>
+				<ul>
+					<li>Bandwidth Efficiency</li>
+					<li>In-field reconfigurability</li>
+					<li>Ease of deployment</li>
+					<li>Simulation</li>
+				</ul>
+			</section>
+
+			<section>
+				<h3>Design : Bandwidth Efficiency</h3>
+				<div style="display: flex; align-items: center; gap: 2vw; justify-content: center">
+					<img src="imgs/UnetStack3.svg" style="max-height: 40vh;" alt="UnetStack">
+					<ul>
+						<li>Agents/Services instead of Layers</li>
+						<li>Customised Physical Layer Implementation (FHBFSK / OFDM)</li>
+						<li>Forward Error Correction (FEC)</li>
+						<li>Compression + Efficient Encoding (Erasure Correction)</li>
+						<li>Priorities + TTLs</li>
+					</ul>
+				</div>
+			</section>
+
+			<section>
+				<h3>Design : In-field reconfigurability</h3>
+				<ul>
+					<li>Software Defined Modem</li>
+					<li>Agent-based architecture</li>
+					<li>Builtin scripting support (Groovy)</li>
+					<li>CONTROL vs DATA communication channels</li>
+					<li>Link Tuning (FEC, Modulation, Power, ...)</li>
+					<li>Routing (Static, Dynamic, ...)</li>
+				</ul>
+			</section>
+
+			<section>
+				<h3>Design : Ease of Deployment</h3>
+				<div style="display: flex; align-items: center; gap: 2vw; justify-content: center">
+					<img src="imgs/deployment.jpg" style="max-height: 40vh;" alt="UnetStack">
+					<ul>
+						<li>Support for non-acoustic Links (RF, Optical, ...)</li>
+						<li>Multiple Network Topologies (Star, Mesh, ...)</li>
+						<li>Same code for development and deployment (Java)</li>
+						<li>Helper Libraries (Gateways) for interfacing with other languages (Python, JavaScript, C, Julia, ...)</li>
+					</ul>
+				</div>
+			</section>
+
+			<section>
+				<h3>Design : Simulation</h3>
+				<div style="display: flex; align-items: center; gap: 2vw; justify-content: center">
+					<img src="imgs/ide-map2.png" style="max-height: 40vh;" alt="UnetStack">
+					<ul>
+						<li>High Fidelity Network Simulation</li>
+						<li>Realistic Channel Models</li>
+						<li>Basic motion simulation</li>
+						<li>Acoustic Propagation Simulation</li>
+						<li>Hardware in the loop simulation (new!)</li>
+					</ul>
+				</div>
+			</section>
+
+			<section>
+				<h3>Nerdy Details 🤓</h3>
+			</section>
+
+			<section>
+				<h3>UnetStack</h3>
+				<ul>
+					<li>OSS distributed computing framework <a href="https://fjage.readthedocs.io/en/latest/">fjåge</a></li>
+					<li>Agents => unit of computation (threads/nodes)</li>
+					<li>Message passing => communication between Agents</li>
+					<li>JSON/TCP as the transport protocol on the wire</li>
+				</ul>
+			</section>
+
+			<section>
+				<h3>UnetStack - Languages</h3>
+				<ul>
+					<li>Java</li>
+					<li>Groovy</li>
+					<li>Julia</li>
+					<li>Python/C/Javascript (Gateways)</li>
+				</ul>
+			</section>
+
+			<section data-markdown>
+				<textarea data-template>
+					## Demo!
+				</textarea>
+			</section>
+
+			<section data-markdown>
+				<textarea data-template>
+					## Hands-on Session ⌨️
+				</textarea>
+			</section>
+
+			<section data-markdown>
+				<textarea data-template>
+					## Unet Simulator 🛜
+					- Window/Linux/MacOS
+					- Java 8
+				</textarea>
+			</section>
+
+			<section data-markdown>
+				<textarea data-template>
+					## Unet Audio 🔉
+					- Linux(x86) or MacOS(x86/ARM)
+					- Java 8
+					- portaudio : https://www.portaudio.com/
+				</textarea>
+			</section>
+
+			<section data-markdown>
+				<textarea data-template>
+					## Slides
+					![Slides](imgs/qr.png)
+				</textarea>
+			</section>
+
+		</div>
+	</div>
+
+	<script src="dist/reveal.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
+	<script>
+		// More info about initialization & config:
+		// - https://revealjs.com/initialization/
+		// - https://revealjs.com/config/
+		Reveal.initialize({
+			hash: true,
+			slideNumber: true,
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+		});
+	</script>
+</body>
 </html>
