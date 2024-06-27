@@ -1,0 +1,22 @@
+/*-- scss:defaults --*/
+
+// fonts
+$font-family-sans-serif: Inter, Helvetica, sans-serif;
+
+
+
+/*-- scss:rules --*/
+
+.reveal h1,
+.reveal h2 {
+  font-family: Inter, Helvetica, sans-serif;
+}
+
+.reveal blockquote {
+  font-size: 0.6em;
+  padding: .5rem 1rem;
+}
+
+.quarto-figure {
+  margin-bottom: 0.2em;
+}

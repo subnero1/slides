@@ -1,0 +1,15 @@
+[device]
+serial = "node1"
+model = "Unet audio"
+vendor = "UnetStack"
+type = "SimpleDevice"
+
+[input]
+analoginterface = "SoundcardDAQ"
+baseport = 9809                 # with control port 9809, DAQ data port 9810
+
+[output]
+analoginterface = "SoundcardDAQ"
+
+[bb]
+fc = 24000

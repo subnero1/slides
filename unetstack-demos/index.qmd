@@ -1,0 +1,201 @@
+---
+title: "Demonstrations"
+author: "Chinmay Pendharkar (Subnero)"
+format:
+  revealjs:
+    theme: [night, custom.scss]
+---
+
+## Agenda
+- How to use Subnero modems
+- How to use UnetStack simulator (VAO)
+- Hands-on session with UnetStack simulator (VAO)
+- Q&A
+
+## Modem concepts
+- IP address (static + dynamic)
+- Web Shell vs API (JSON/TCP)
+- Power Level (`plvl`)
+- `node.address`
+- `CONTROL` vs `DATA` channel
+
+## Demos for today {.smaller}
+1. Connect to modems
+    a. Acoustic ping
+    b. Send a text message (`tell`)
+    c. File transfer (`putfile`)
+2. VirtualAcousticOcean
+    a. Acoustic ping
+    b. Send a text message (`tell`)
+    c. File transfer (`putfile`)
+    d. Profiles
+    e. LinkTuner & Speedtest
+3. Ripple
+
+## 1. Connect to modems
+
+## Setup (Physical)
+![](setup.jpg)
+
+## 1a. Acoustic ping
+![](modem-ping.png)
+
+> `ping 100`
+
+## 1a. Acoustic ping
+- Single `CONTROL` frame to and fro
+- Routing (if required)
+
+## 1b. Send a text message (`tell`)
+![](modem-tell.png)
+
+> `tell 100 "Hello, world!"`
+
+## 1b. Send a text message (`tell`)
+- `remote << new RemoteTextMessage()`
+- Multiple `CONTROL` + `DATA` frames
+- Fragmentation + reassembly
+- Routing (if required)
+
+## 1c. File transfer (`putfile`)
+![](modem-fput.png)
+
+> `putfile 100 "file.txt"`
+
+::: {.notes}
+```
+logLevel "org.arl.unet.remote", FINEST
+plvl 0
+subscribe remote
+remote.enable = true
+...
+logLevel "org.arl.unet.remote", FINEST
+plvl 0
+subscribe remote
+uwlink.dataRate
+ls
+progress true
+fput 230, 'setup.jpeg'
+```
+:::
+
+## 1c. File transfer (`putfile`)
+- `remote << new RemoteFilePutReq()`
+- Multiple `CONTROL` + `DATA` frames
+- Fragmentation + reassembly
+- Routing (if required)
+- Erasure coding + opportunistic gzip
+
+## 2. VirtualAcousticOcean
+- Framework to simulate underwater acoustics
+- Multiple propogation models (PekerisRayModel, etc)
+- Integrates with UnetStack
+- Written in Julia lang
+- [Open Source](https://github.com/org-arl/VirtualAcousticOcean.jl)
+
+## Setup (Virtual)
+![](setup-virtual.jpg)
+
+## 2a. Acoustic ping
+
+## 2b. Send a text message (`tell`)
+
+## 2c. File transfer (`putfile`)
+![](vao-fput.png)
+
+> `putfile 100 "file.txt"`
+
+::: {.notes}
+```
+logLevel "org.arl.unet.remote", FINEST
+plvl 0
+subscribe remote
+remote.enable = true
+...
+logLevel "org.arl.unet.remote", FINEST
+plvl 0
+subscribe remote
+uwlink.dataRate
+ls
+progress true
+fput 230, 'setup.jpeg'
+```
+:::
+
+## 2d. Profiles
+![](vao-profiles.png)
+
+> `profile 8`
+
+::: {.notes}
+```
+uwlink.dataRate
+profile 8
+uwlink.dataRate
+tell 230, 'Hello, world!'
+...
+subscribe phy
+// then set profile on the receiver device
+```
+:::
+
+## 2d. Profiles
+- Hand picked modulations parameters
+- Only changes `DATA` channel
+
+## 2e. LinkTuner & Speedtest
+![](vao-tuner.png)
+
+> `tuner << new LinkTuneReq(to: 100)`
+
+::: {.notes}
+```
+tuner << new LinkTuneReq(to: 100)
+uwlink.dataRate
+ls
+progress true
+fput 230, 'setup.jpeg'
+```
+:::
+
+## 2e. LinkTuner
+- Probe based link tuning
+- Uses `CONTROL` channel for synchronization
+- Only changes `DATA` channel
+- Heuristic based tuning policy
+
+## 3. Ripple
+![](ripple.jpg)
+
+## 3. Ripple
+- Unet Simulator (UnetSim)
+- Simulates an AUV moving (motion model)
+- Uses JSON/TCP API in Python
+- Simulated Optical/RF Link in UnetSim
+- UnetSim for Acoustic link
+
+
+## Hands on Session (VAO)
+![](wifi.png){fig-align="center" height=200}
+
+
+::: {style="font-size:0.8em"}
+
+- node1 : `29` => http://192.168.10.124:8080
+- node2 : `230` => http://192.168.10.124:8082
+- node3 : `179` => http://192.168.10.124:8081
+- node4 : `65` => http://192.168.10.124:8083
+- node5 : `24` => http://192.168.10.124:8084
+- node6 : `239` => http://192.168.10.124:8085
+
+:::
+
+
+## Hands on Session (VAO)
+- `node`
+- `uwlink`
+- `phy`
+- `phy[CONTROL]`
+- `phy.noise`
+- `ping <node-addr>`
+- `tell <node-addr>, hello`
